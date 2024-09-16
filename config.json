@@ -1,0 +1,26 @@
+{
+    // Name of the addon
+    "name": "Inari API",
+
+    // Lua string patterns to look for in a workspace.
+    // If detected, this addon will be recommended to enable
+    "words": ["Kitsune Tails", "Inari"],
+
+    // Lua string patterns to look for in filenames.
+    // If detected, this addon will be recommended to enable
+    "files": ["script.lua"],
+
+    // List of settings to apply when this addon is enabled
+    "settings": {
+        "Lua.diagnostics.globals" : [
+            "accept",
+            "cancel",
+            "init",
+            "loadresources",
+            "menu3",
+            "navigate",
+            "render",
+            "update"
+        ]
+    }
+}
