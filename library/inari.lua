@@ -1,5 +1,6 @@
 --------------------------------------------------------------------------------
 ---@meta
+---@version 0.0.0
 ---Lua definitions for the Kitsune Tails Inari API,
 ---the API for creating minigames for the game Kitsune Tails.
 ---

@@ -54,8 +54,9 @@ The former approach is a bit cleaner because you do not have to replicate
 
 ## Attribution and Licensing
 
-This work was derived from the Inari API documentation by [Kitsune Games LLC][3].
-Permission was granted to free to use, distribute, and make further adaptations of the Inari API documentation
-for non-commercial purposes, retaining all existing attributions.
+This work is licensed under [CC BY-NC 4.0 <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="">](https://creativecommons.org/licenses/by-nc/4.0/). Permission is granted to use, distribute, and make further adaptations
+for non-commercial purposes, retaining the reference to the repository of origin.
+
+This work was derived from the Inari API documentation by [Kitsune Games LLC][3], with permission.
 
 [3]: https://kitsunegames.com
