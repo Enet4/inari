@@ -1,7 +1,5 @@
 --------------------------------------------------------------------------------
 ---@meta
----@diagnostic disable: lowercase-global
----
 ---Lua definitions for the Kitsune Tails Inari API,
 ---the API for creating minigames for the game Kitsune Tails.
 ---
@@ -11,10 +9,29 @@
 ---
 ---Last updated according to Kitsune Tails version 1.0.3.3 (2024-08-29)
 ---Inari API version 0
+---<https://github.com/Enet4/inari>
 --------------------------------------------------------------------------------
 
 ---A resource loaded via `loadresource` or `loadbuiltin`.
 ---@class resource: unknown
+
+---A binary resource loaded via `loadresource` or `loadbuiltin`.
+---@class binary: resource
+
+---An image resource loaded via `loadresource` or `loadbuiltin`.
+---@class image: resource
+
+---A music resource loaded via `loadresource` or `loadbuiltin`.
+---@class music: resource
+
+---A sound resource loaded via `loadresource` or `loadbuiltin`.
+---@class sound: resource
+
+---A text resource loaded via `loadresource` or `loadbuiltin`.
+---@class text: resource
+
+---A tilemap resource loaded via `loadresource` or `loadbuiltin`.
+---@class tilemap: resource
 
 ---A sprite created via `sprite`.
 ---@class sprite: unknown
@@ -44,12 +61,7 @@
 ---| 2 Flipped (vertical)
 ---| 3 Carrying
 
----@alias tilemap any
-
 ---@alias tileId integer
-
----Binary byte data
----@alias bytes string
 
 ---Colors can be numbers that refer to entries in the Kitsune Tails global palette (see palettes.html) or can be hexadecimal color values in the form ABGR. So color 23 is the 23rd color in the global palette, whereas `0xFFBB0044` is fully opaque dark blurple.
 ---@alias color number
@@ -126,20 +138,20 @@ sort = table.sort
 function exit(tickets, score) end
 
 ---Returns the binary byte values contained within a binary file loaded using `loadresource` or `loadbuiltin` as a table. The first byte will be at index 1. Calling `getbin` multiple times will result in multiple clones of the original. Altering the data in the table will not alter the data in the original.
----@param id any
----@return bytes
+---@param id binary
+---@return table
 function getbin(id) end
 
 ---Gets the height of the resource specified by `id`. For images and software surfaces this is the height in pixels, for maps and sprites this is the height in tiles. If `id` isn’t specified or is nil then the height of the screen in pixels is returned instead.
----@param id? any
+---@param id? resource
 function getheight(id) end
 
 ---Returns the text associated with a text file loaded using `loadresource` or `loadbuiltin`.
----@param id any
+---@param id text
 function gettext(id) end
 
 ---Gets the width of the resource specified by `id`. For images and software surfaces this is the width in pixels, for maps and sprites this is the width in tiles. If `id` isn’t specified or is nil then the width of the screen in pixels is returned instead.
----@param id? any
+---@param id? resource
 ---@return integer
 function getwidth(id) end
 
@@ -183,6 +195,58 @@ function lfsr(bits, seed, term) end
 --- - "tilemap"   File is a Tiled Map Editor map file exported to json
 ---@alias resourcetype ("binary" | "image" | "music" | "sound" | "text" | "tilemap")
 
+---Loads file `f` from the script’s current folder as content for the minigame and returns a reference to the content.
+---When the `type` argument is "binary",
+---the file contains binary data.
+---@param f string
+---@param type "binary"
+---@return binary
+function loadresource(f, type) end
+
+---Loads file `f` from the script’s current folder as content for the minigame and returns a reference to the content.
+---When the `type` argument is "image",
+---the file is an image (PNG).
+---@param f string
+---@param type "image"
+---@return image
+function loadresource(f, type) end
+
+---Loads file `f` from the script’s current folder as content for the minigame and returns a reference to the content.
+---When the `type` argument is "music",
+---the file is an music file (OGG) streamed from disk.
+---
+--- NOTE: music and sound files must end with the extension .ogg!
+---@param f string
+---@param type "music"
+---@return music
+function loadresource(f, type) end
+
+---Loads file `f` from the script’s current folder as content for the minigame and returns a reference to the content.
+---When the `type` argument is "sound",
+---the file is an sound file (OGG) streamed from disk.
+---
+--- NOTE: music and sound files must end with the extension .ogg!
+---@param f string
+---@param type "sound"
+---@return sound
+function loadresource(f, type) end
+
+---Loads file `f` from the script’s current folder as content for the minigame and returns a reference to the content.
+---When the `type` argument is "text",
+---the file contains plain text.
+---@param f string
+---@param type "text"
+---@return text
+function loadresource(f, type) end
+
+---Loads file `f` from the script’s current folder as content for the minigame and returns a reference to the content.
+---When the `type` argument is "image",
+---the file is a Tiled Map Editor map file exported to json.
+---@param f string
+---@param type "tilemap"
+---@return tilemap
+function loadresource(f, type) end
+
 ---Loads file `f` from the script’s current folder as content for the minigame and returns a reference to the content. The `type` argument specifies what type of content is being loaded. It must be one of the following strings:
 ---
 --- - "binary"    File contains binary data
@@ -197,6 +261,42 @@ function lfsr(bits, seed, term) end
 ---@param type resourcetype
 ---@return resource
 function loadresource(f, type) end
+
+---This is the same as `loadresource` but it loads files found in the root of Kitsune Tails Content folder.
+---@param f string
+---@param type "binary"
+---@return binary
+function loadbuiltin(f, type) end
+
+---This is the same as `loadresource` but it loads files found in the root of Kitsune Tails Content folder.
+---@param f string
+---@param type "image"
+---@return image
+function loadbuiltin(f, type) end
+
+---This is the same as `loadresource` but it loads files found in the root of Kitsune Tails Content folder.
+---@param f string
+---@param type "music"
+---@return music
+function loadbuiltin(f, type) end
+
+---This is the same as `loadresource` but it loads files found in the root of Kitsune Tails Content folder.
+---@param f string
+---@param type "sound"
+---@return sound
+function loadbuiltin(f, type) end
+
+---This is the same as `loadresource` but it loads files found in the root of Kitsune Tails Content folder.
+---@param f string
+---@param type "text"
+---@return text
+function loadbuiltin(f, type) end
+
+---This is the same as `loadresource` but it loads files found in the root of Kitsune Tails Content folder.
+---@param f string
+---@param type "tilemap"
+---@return tilemap
+function loadbuiltin(f, type) end
 
 ---This is the same as `loadresource` but it loads files found in the root of Kitsune Tails Content folder.
 ---@param f string
@@ -279,13 +379,13 @@ function color(color) end
 function drawcursor(x, y, flashing) end
 
 ---Draw an image loaded using `loadresource` or `loadbuiltin` or a software surface created using `createsurf`. If `srcx`, `srcy`, `srcw`, and `srch` are specified then only part of the image will be drawn. If `width` and `height` are specified then the image will be scaled to that width and height. If `srcw` or `srch` are nil or not a number the image’s original width or height minus `srcx` or `srcy` will be used for that parameter. If `width` or `height` are nil or not a number the corresponding value of `srcw` or `srch` is used as a parameter. Calls to `drawimg` are affected by the global drawing color set using the `color` function, which defaults to white, and the color argument specifies the color to draw the image with for this call. An optional z-buffer value between 0 and 1 can be specified using the `depth` argument, where `depth` describes the distance from the viewer (lower values draw over higher values.) The image can be mirrored or flipped by making the `width` and `height` arguments respectively negative.
----@param id any
+---@param id image | surface
 ---@param x number
 ---@param y number
 function drawimg(id, x, y) end
 
 ---Draw an image loaded using `loadresource` or `loadbuiltin` or a software surface created using `createsurf`. If `srcx`, `srcy`, `srcw`, and `srch` are specified then only part of the image will be drawn. If `width` and `height` are specified then the image will be scaled to that width and height. If `srcw` or `srch` are nil or not a number the image’s original width or height minus `srcx` or `srcy` will be used for that parameter. If `width` or `height` are nil or not a number the corresponding value of `srcw` or `srch` is used as a parameter. Calls to `drawimg` are affected by the global drawing color set using the `color` function, which defaults to white, and the color argument specifies the color to draw the image with for this call. An optional z-buffer value between 0 and 1 can be specified using the `depth` argument, where `depth` describes the distance from the viewer (lower values draw over higher values.) The image can be mirrored or flipped by making the `width` and `height` arguments respectively negative.
----@param id any
+---@param id image | surface
 ---@param x number
 ---@param y number
 ---@param srcx number
@@ -295,7 +395,7 @@ function drawimg(id, x, y) end
 function drawimg(id, x, y, srcx, srcy, srcw, srch) end
 
 ---Draw an image loaded using `loadresource` or `loadbuiltin` or a software surface created using `createsurf`. If `srcx`, `srcy`, `srcw`, and `srch` are specified then only part of the image will be drawn. If `width` and `height` are specified then the image will be scaled to that width and height. If `srcw` or `srch` are nil or not a number the image’s original width or height minus `srcx` or `srcy` will be used for that parameter. If `width` or `height` are nil or not a number the corresponding value of `srcw` or `srch` is used as a parameter. Calls to `drawimg` are affected by the global drawing color set using the `color` function, which defaults to white, and the color argument specifies the color to draw the image with for this call. An optional z-buffer value between 0 and 1 can be specified using the `depth` argument, where `depth` describes the distance from the viewer (lower values draw over higher values.) The image can be mirrored or flipped by making the `width` and `height` arguments respectively negative.
----@param id any
+---@param id image | surface
 ---@param x number
 ---@param y number
 ---@param srcx? number
@@ -307,7 +407,7 @@ function drawimg(id, x, y, srcx, srcy, srcw, srch) end
 function drawimg(id, x, y, srcx, srcy, srcw, srch, width, height) end
 
 ---Draw an image loaded using `loadresource` or `loadbuiltin` or a software surface created using `createsurf`. If `srcx`, `srcy`, `srcw`, and `srch` are specified then only part of the image will be drawn. If `width` and `height` are specified then the image will be scaled to that width and height. If `srcw` or `srch` are nil or not a number the image’s original width or height minus `srcx` or `srcy` will be used for that parameter. If `width` or `height` are nil or not a number the corresponding value of `srcw` or `srch` is used as a parameter. Calls to `drawimg` are affected by the global drawing color set using the `color` function, which defaults to white, and the color argument specifies the color to draw the image with for this call. An optional z-buffer value between 0 and 1 can be specified using the `depth` argument, where `depth` describes the distance from the viewer (lower values draw over higher values.) The image can be mirrored or flipped by making the `width` and `height` arguments respectively negative.
----@param id any
+---@param id image | surface
 ---@param x number
 ---@param y number
 ---@param srcx? number
@@ -320,7 +420,7 @@ function drawimg(id, x, y, srcx, srcy, srcw, srch, width, height) end
 function drawimg(id, x, y, srcx, srcy, srcw, srch, width, height, color) end
 
 ---Draw an image loaded using `loadresource` or `loadbuiltin` or a software surface created using `createsurf`. If `srcx`, `srcy`, `srcw`, and `srch` are specified then only part of the image will be drawn. If `width` and `height` are specified then the image will be scaled to that width and height. If `srcw` or `srch` are nil or not a number the image’s original width or height minus `srcx` or `srcy` will be used for that parameter. If `width` or `height` are nil or not a number the corresponding value of `srcw` or `srch` is used as a parameter. Calls to `drawimg` are affected by the global drawing color set using the `color` function, which defaults to white, and the color argument specifies the color to draw the image with for this call. An optional z-buffer value between 0 and 1 can be specified using the `depth` argument, where `depth` describes the distance from the viewer (lower values draw over higher values.) The image can be mirrored or flipped by making the `width` and `height` arguments respectively negative.
----@param id any
+---@param id image | surface
 ---@param x number
 ---@param y number
 ---@param srcx number
@@ -347,7 +447,7 @@ function drawimg(id, x, y, srcx, srcy, srcw, srch, width, height, color , depth)
 function drawtext(text, x, y, color, stroke, width, height, halign, valign, wordwrap) end
 
 ---Same as drawimg, with the addition of the `rot`, `xorg`, and `yorg` arguments. The `rot` argument is the rotation of the image in radians, with a full rotation happening between 0 and two times pi. The optional `xorg` and `yorg` arguments apply a pixel offset to the point around which the sprite rotates, which defaults to the center of the image after scaling.
----@param id any
+---@param id image | surface
 ---@param x number
 ---@param y number
 ---@param rot number
@@ -367,7 +467,7 @@ function drawrot(id, x, y, rot, xorg, yorg, srcx, srcy, srcw, srch, width, heigh
 ---
 ---The tile argument is an index corresponding to the 16x16 tile portion of the image to draw from, starting at the top-left of an image and increasing right, then down. This is the same as the ‘Tile ID’ value shown in the properties in Tiled Map Editor when a tile in a tileset is selected. An optional z-buffer value between 0 and 1 can be specified using the `depth` argument, where `depth` describes the distance from the viewer (lower values draw over higher values.)
 ---
----@param id any
+---@param id image | surface
 ---@param tile number
 ---@param x number
 ---@param y number
@@ -453,13 +553,13 @@ function musvol(volume) end
 function pausemus(unpause) end
 
 ---Plays music loaded using `loadresource` or `loadbuiltin` and specified by `id`. Optionally sets the music to loop (defaults to true) and specifies the volume as a percentage value between 0 and 100 (default 100). If no arguments are given, or the first argument is `nil`, stops playing music. If `loop` is a number then the loop point for the music will be set to the value of `loop` in seconds only if the music was loaded via `loadresource`, as assets loaded with `loadbuiltin` have a loop point which cannot be changed. Negative values for `loop` will be treated as identical to passing in `false`.
----@param id resource
+---@param id music
 ---@param loop? (boolean | number)
 ---@param volume? number
 function playmus(id, loop, volume) end
 
 ---Plays sound loaded using `loadresource` or `loadbuiltin` and specified by `id`. Optionally specifies the volume as a percentage value between 0 and 200 (default 100). The `pitch` argument specifies the pitch of the sound effect, where 1.0 is the default pitch, values below 1.0 pitch the sound down, and values above 1.0 pitch the sound up. The `pan` argument controls the stereo panning from -1 (left) to 1 (right) where 0 is the default.
----@param id resource
+---@param id sound
 ---@param volume? number
 ---@param pitch? number
 ---@param pan? number
@@ -607,7 +707,7 @@ function animate(spr, frames, animtype, reset) end
 ---}
 ---```
 ---This is largely the same as the simple format, the difference is that every frame now can have a `baseWidth` and `baseHeight` and can have an offset, and specifies its source rectangle in the image. This means that blank areas of a sprite can be cropped for efficiency, and the offset used to offset the cropped portion from the base width and height.
----@param binary bytes
+---@param binary binary
 ---@param name string
 ---@param anims table[]
 function definesprite(binary, name, anims) end
@@ -634,7 +734,7 @@ function sprite(type) end
 --- - 1       Mirrored (horizontal)
 --- - 2       Flipped (vertical)
 --- - 3       Carrying
----@param spr any
+---@param spr sprite
 ---@param flag spriteFlag
 ---@param value? boolean
 ---@return boolean
